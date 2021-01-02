@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public Transform playerCameraParent;
     public float lookSpeed = 2.0f;
     public float lookXLimit = 60.0f;
+    private AbilityController abilityController;
 
     CharacterController characterController;
     Vector3 moveDirection = Vector3.zero;
@@ -22,6 +23,7 @@ public class PlayerController : MonoBehaviour
     {
         characterController = GetComponent<CharacterController>();
         rotation.y = transform.eulerAngles.y;
+        abilityController = GetComponent<AbilityController>();
     }
 
     void Update()
@@ -57,6 +59,11 @@ public class PlayerController : MonoBehaviour
             rotation.x = Mathf.Clamp(rotation.x, -lookXLimit, lookXLimit);
             playerCameraParent.localRotation = Quaternion.Euler(rotation.x, 0, 0);
             transform.eulerAngles = new Vector2(0, rotation.y);
+        }
+
+        if (Input.GetMouseButton(0))
+        {
+            abilityController.FireProjectile();
         }
     }
 }
